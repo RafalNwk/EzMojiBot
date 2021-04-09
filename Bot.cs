@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using EzMojiBot.Commands;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,6 @@ namespace EzMojiBot
             await Client.ConnectAsync();
             await Task.Delay(-1);
         }
-
         private Task OnClientReady(object sender, ReadyEventArgs e)
         {
             return Task.CompletedTask;

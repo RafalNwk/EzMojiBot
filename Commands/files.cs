@@ -16,7 +16,7 @@ namespace EzMojiBot.Commands
     {
                 [Command("emoji")]
                 [Description("Creates server emoji from image (.jpg, .png) attachment.")]
-                [RequireRoles(RoleCheckMode.Any, "ADMIN")]
+                [RequireBotPermissions(DSharpPlus.Permissions.ManageEmojis)]
                 public async Task Emoji(CommandContext ctx, [Description("Name of new emoji")] string ename="")
                 {
                     try
@@ -25,6 +25,7 @@ namespace EzMojiBot.Commands
                         string fname = ctx.Message.Attachments.FirstOrDefault().FileName;
                         int height = ctx.Message.Attachments.FirstOrDefault().Height;
                         int width = ctx.Message.Attachments.FirstOrDefault().Width;
+                        
                         int scale = 0;
                         if (height > width)
                         {
@@ -77,14 +78,16 @@ namespace EzMojiBot.Commands
                             return destImage;
                         }
                         File.Delete(@"done.png");
-                        await ctx.Channel.SendMessageAsync($@"Emoji :{ename}: has been created!").ConfigureAwait(false);
+
+                        await ctx.Message.DeleteAsync().ConfigureAwait(false);
+                        await ctx.Channel.SendMessageAsync(ctx.Member.Mention+$@" Emoji :{ename}: has been created!").ConfigureAwait(false);
                     }
                     catch
                     {
                         await ctx.Channel.SendMessageAsync("Failed to create a new emoji!").ConfigureAwait(false);
                     }
                 }
-
+                
         private byte[] DownloadData(object url)
         {
             throw new Exception("Failed to create a new emoji!");
