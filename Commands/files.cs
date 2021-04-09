@@ -16,6 +16,7 @@ namespace EzMojiBot.Commands
     {
                 [Command("emoji")]
                 [Description("Creates server emoji from image (.jpg, .png) attachment.")]
+                [RequireRoles(RoleCheckMode.Any, "ADMIN")]
                 public async Task Emoji(CommandContext ctx, [Description("Name of new emoji")] string ename="")
                 {
                     try
