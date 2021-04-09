@@ -1,14 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-namespace EzMojiBot
+﻿namespace EzMojiBot
 {
     class Program
     {

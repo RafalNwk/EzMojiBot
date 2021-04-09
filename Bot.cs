@@ -1,10 +1,9 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
+using EzMojiBot.Commands;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace EzMojiBot
 {
     public class Bot
     {
-
     public DiscordClient Client { get; private set; }
     public CommandsNextExtension Commands { get; private set; }
 
@@ -43,17 +41,13 @@ namespace EzMojiBot
             {
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableMentionPrefix = true,
-                EnableDms = false
+                EnableDms = false,
+                DmHelp = false,
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
 
-            Client.MessageCreated += async (s, e) =>
-            {
-                if (e.Message.Content.ToLower().StartsWith("ping"))
-                    await e.Message.RespondAsync("pong!");
-
-            };
+            Commands.RegisterCommands<files>();
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
