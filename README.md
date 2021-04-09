@@ -3,7 +3,7 @@
 
 ## Features
 To add emoji to discord server, users need to resize an image to max 256kb and go to server settings where they can 
-add file and name by yourself. It isn't required right now. EzMoji can easily add new emoji just by typping 
+add file and name by yourself. There is an easier way to do that. EzMoji can easily add new emoji just by typping 
 ">emoji [emojiname]" and attaching .jpg or .png file to message.
 
 ## Dependencies
