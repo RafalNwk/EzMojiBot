@@ -1,5 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -16,7 +18,7 @@ namespace EzMojiBot.Commands
     {
                 [Command("emoji")]
                 [Description("Creates server emoji from image (.jpg, .png) attachment.")]
-                [RequireBotPermissions(DSharpPlus.Permissions.ManageEmojis)]
+                [RequireBotPermissions(Permissions.ManageEmojis)]
                 public async Task Emoji(CommandContext ctx, [Description("Name of new emoji")] string ename="")
                 {
                     try
@@ -72,12 +74,12 @@ namespace EzMojiBot.Commands
                                     graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
                                 }
                             }
-                            destImage.Save("done.png", ImageFormat.Png);
-                            FileStream efile = new FileStream("done.png", FileMode.Open);
-                            await ctx.Guild.CreateEmojiAsync(ename, efile).ConfigureAwait(false);
+                            var file = new MemoryStream();
+                            destImage.Save(file, System.Drawing.Imaging.ImageFormat.Png);
+                            file.Position = 0;
+                            await ctx.Guild.CreateEmojiAsync(ename, file).ConfigureAwait(false);
                             return destImage;
                         }
-                        File.Delete(@"done.png");
 
                         await ctx.Message.DeleteAsync().ConfigureAwait(false);
                         await ctx.Channel.SendMessageAsync(ctx.Member.Mention+$@" Emoji :{ename}: has been created!").ConfigureAwait(false);
@@ -87,7 +89,6 @@ namespace EzMojiBot.Commands
                         await ctx.Channel.SendMessageAsync("Failed to create a new emoji!").ConfigureAwait(false);
                     }
                 }
-                
         private byte[] DownloadData(object url)
         {
             throw new Exception("Failed to create a new emoji!");
